@@ -1,5 +1,9 @@
 # Лабораторная работа 1
 
+## Дедлайн сдачи работы без пенальти
+
+02.12.2024 00:00
+
 ## Как выполнять
 
 Выполнять согласно алгоритму в [up09-index](https://github.com/31isr/up09-index)
@@ -193,10 +197,14 @@ from pathlib import Path
 
 8. Запустите сервер и проверьте работает ли маршрут `about` по этой ссылке `localhost:8000/about`
 
-> [!info] Задание 1
+> [!note]
+> **Задание 1**
+>
 > Попробуйте добавить JavaScript файл, который будет выводить в консоли надпись `Добро пожаловать на мой сайт`
 
-> [!info] Задание 2
+> [!note]
+> **Задание 2**
+>
 > Создайте главную страницу, которая будет открываться по маршруту `/` и отображать шаблон с заголовком первого уровня "Главная страница". Подключите JS и CSS файлы
 
 ## 3. Создание приложения "posts"
@@ -267,5 +275,80 @@ from django.urls import path, include # <-- импорт функции include
 
 7. Проверьте работает ли приложение `posts` перейдя по [этой ссылке](localhost:8000/posts)
 
-> [!info] Задание 3
+> [!note]
+> **Задание 3**
+>
 > Попробуйте добавить приложение communities, которое будет располагаться по маршруту "communities"
+
+## 4. Создание навигации
+
+1. Добавьте следующие стили к проекту
+
+```css
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+}
+
+main {
+    flex-grow: 1;
+    display: grid;
+    place-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: #81dbb8;
+}
+
+a:hover {
+    opacity: .85;
+}
+```
+
+2. Создайте новый шаблон `layout.html` для всего проекта с содержанием
+
+```html
+<!doctype html>
+{% load static %}
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %} Приложение Django {% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+        <script src="{% static 'js/main.js' %}" defer></script>
+    </head>
+    <body>
+        <main>{% block content %} {% endblock %}</main>
+    </body>
+</html>
+```
+
+> [!note]
+> **Задание 4**
+>
+> Перед блоком `main` создайте навигацию, которая имеет 4 кнопки, которые ведут на:
+> -   главную страницу
+> -   обо мне
+> -   посты
+> -   группы
+>
+> Добавьте стилей, чтобы навигация была по всей ширине экрана и прикреплена к верхней части экрана при скролле (можете использовать bootstrap)
+
+3. Измените шаблон `home.html`, чтобы он использовал новый компонент `layout.html`
+
+```html
+{% extends 'layout.html' %}
+
+{% block title %}
+    Главная страница
+{% endblock %}
+
+{% block content %}
+    <h1>Главная страница</h1>
+{% endblock %}
+```
+
+Таким же образом измените шаблон `about.html`, `posts_list.html` и `communities_list.html`
